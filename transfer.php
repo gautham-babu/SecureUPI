@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 if(!isset($_SESSION['userId'])){ header('location:login.php');}
@@ -10,30 +9,6 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
   <?php require 'assets/autoloader.php'; ?>
   <?php require 'assets/db.php'; ?>
   <?php require 'assets/function.php'; ?>
-  <?php
-    $error = "";
-    if (isset($_POST['userLogin']))
-    {
-      $error = "";
-        $user = $_POST['email'];
-        $pass = $_POST['password'];
-       
-        $result = $con->query("select * from userAccounts where email='$user' AND password='$pass'");
-        if($result->num_rows>0)
-        { 
-          session_start();
-          $data = $result->fetch_assoc();
-          $_SESSION['userId']=$data['id'];
-          $_SESSION['user'] = $data;
-          header('location:index.php');
-         }
-        else
-        {
-          $error = "<div class='alert alert-warning text-center rounded-0'>Incorrect Username or Password, try again!</div>";
-        }
-    }
-
-   ?>
 </head>
 <body style="background:#ffffff;background-size: 100%">
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #244f9e;">
@@ -88,12 +63,12 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
                     <input type='text' class='form-control' value='".bankName."' readonly required>
                     Enter Amount for transfer.
                     <input type='number' name='amount' class='form-control' min='1' max='$userData[balance]' required>
-                    <button type='submit' name='transferSelf' class='btn btn-primary btn-bloc btn-sm my-1'>Tranfer</button>
+                    <button type='submit' name='transferSelf' class='btn btn-primary btn-bloc btn-sm my-1'>Transfer</button>
                   </form>
                 </div>";
           }
           else
-            echo "<div class='alert alert-success w-50 mx-auto'>Account No. $_POST[otherNo] Does not exist</div>";
+            echo "<div class='alert alert-danger w-50 mx-auto'>Account No. $_POST[otherNo] Does not exist</div>";
         }
       } 
       ?>
@@ -103,17 +78,34 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     if (isset($_POST['transferSelf']))
     {
       $amount = $_POST['amount'];
-      setBalance($amount,'debit',$userData['accountNo']);
-      setBalance($amount,'credit',$_POST['otherNo']);
-      makeTransaction('transfer',$amount,$_POST['otherNo']);
-      echo "<script>alert('Transfer Successfull');window.location.href='transfer.php'</script>";
+      $otherNo = $_POST['otherNo'];
+
+      // Call the Python script for fraud detection
+      $command = escapeshellcmd("python assets/fraud_detection.py $amount $userData[accountNo] $otherNo");
+      $output = shell_exec($command);
+
+      // Check if the transaction is fraudulent
+      if ($output === null) {
+          echo "<div class='alert alert-warning'>Unable to determine if the transaction is fraudulent. Please try again later.</div>";
+      } else {
+          $is_fraud = trim($output) == '1';
+
+          if ($is_fraud) {
+              echo "<div class='alert alert-danger'>Warning: This transaction is flagged as fraudulent!</div>";
+          } else {
+              setBalance($amount,'debit',$userData['accountNo']);
+              setBalance($amount,'credit',$otherNo);
+              makeTransaction('transfer',$amount,$otherNo);
+              echo "<script>alert('Transfer Successful');window.location.href='transfer.php'</script>";
+          }
+      }
     }
     if (isset($_POST['transfer']))
     {
       $amount = $_POST['amount'];
       setBalance($amount,'debit',$userData['accountNo']);
       makeTransaction('transfer',$amount,$_POST['otherNo']);
-      echo "<script>alert('Transfer Successfull');window.location.href='transfer.php'</script>";
+      echo "<script>alert('Transfer Successful');window.location.href='transfer.php'</script>";
     }
       $array = $con->query("select * from transaction where userId = '$userData[id]' AND action = 'transfer' order by date desc");
       if ($array ->num_rows > 0) 
