@@ -78,13 +78,17 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
             {
               echo "<div class='alert alert-success'>You deposited ₹$row[credit] in your account at $row[date]</div>";
             }
-            if ($row['action'] == 'deduction') 
+            if ($row['action'] == 'credit') 
             {
-              echo "<div class='alert alert-danger'>Deduction have been made for  ₹$row[debit] from your account at $row[date] in case of $row[other]</div>";
+              echo "<div class='alert alert-danger'>Credited  ₹$row[credit] in your account at $row[date] from $row[other]</div>";
             }
-            if ($row['action'] == 'transfer') 
+            if ($row['action'] == 'debit') 
             {
               echo "<div class='alert alert-warning'>Transfer have been made for  ₹$row[debit] from your account at $row[date] in  account no.$row[other]</div>";
+            }
+            if ($row['action'] == 'fraud') 
+            {
+              echo "<div class='alert alert-warning'>Failed to sent ₹$row[debit] from your account at $row[date] to suspected Fraud account no.$row[other]</div>";
             }
 
          }

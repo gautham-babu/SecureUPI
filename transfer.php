@@ -119,8 +119,11 @@ if ($result->num_rows > 0) {
 
                     if ($is_fraud) {
                         // If the transaction is fraudulent, display a warning and do not proceed
+                        $amount = $_POST['amount'];
+                        makeTransaction('fraud', $amount, $otherNo);
                         echo "<div class='alert alert-danger'>Transfer Failed: The Receiver account is flagged as fraudulent!</div>";
-                       
+                        
+
                       } else {
                         // If the transaction is not fraudulent, proceed with the transfer
                         echo "<div class='alert alert-success'>Transaction is not fraudulent. Proceeding with transfer...</div>";
@@ -128,6 +131,7 @@ if ($result->num_rows > 0) {
                         setBalance($amount, 'debit', $userData['accountNo']);
                         setBalance($amount, 'credit', $otherNo);
                         makeTransaction('transfer', $amount, $otherNo);
+                        makeTransaction('receive', $amount, $otherNo);
                         echo "<script>alert('Transfer Successful');window.location.href='transfer.php'</script>";
                     }
                 }
@@ -150,7 +154,7 @@ if ($result->num_rows > 0) {
                         <tbody>";
                 while ($row = $result->fetch_assoc()) {
                     // Determine the amount based on the action (credit or debit)
-                    $amount = $row['action'] == 'transfer' || $row['action'] == 'withdraw' ? $row['debit'] : $row['credit'];
+                    $amount = $row['action'] == 'debit' || $row['action'] == 'withdraw' || $row['action'] == 'fraud' ? $row['debit'] : $row['credit'];
                     $amount = isset($amount) ? $amount : 'N/A'; // Handle NULL values
                     $otherNo = isset($row['other']) ? $row['other'] : 'N/A'; // Handle NULL values
 
