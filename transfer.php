@@ -119,8 +119,9 @@ if ($result->num_rows > 0) {
 
                     if ($is_fraud) {
                         // If the transaction is fraudulent, display a warning and do not proceed
-                        echo "<div class='alert alert-danger'>Warning: This transaction is flagged as fraudulent!</div>";
-                    } else {
+                        echo "<div class='alert alert-danger'>Transfer Failed: The Receiver account is flagged as fraudulent!</div>";
+                       
+                      } else {
                         // If the transaction is not fraudulent, proceed with the transfer
                         echo "<div class='alert alert-success'>Transaction is not fraudulent. Proceeding with transfer...</div>";
                         $amount = $_POST['amount'];
