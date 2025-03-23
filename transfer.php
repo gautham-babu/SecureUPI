@@ -87,10 +87,18 @@ if ($result->num_rows > 0) {
             <?php
             if (isset($_POST['transferSelf'])) {
                 $otherNo = $_POST['otherNo'];
+                
+                $query = "SELECT * FROM useraccounts WHERE accountNo = '$otherNo'";
+                $result = $con->query($query);
+                if ($result->num_rows > 0) {
+                    $OtherData = $result->fetch_assoc();
+                } else {
+                    die("User data not found.");
+                }
 
                 // Fetch sender's aadhaar and number
-                $sender_aadhaar = $userData['aadhaar'];
-                $sender_number = $userData['number'];
+                $sender_aadhaar = $OtherData['aadhaar'];
+                $sender_number = $OtherData['number'];
 
                 // Call the Python script for fraud detection
                 $command = escapeshellcmd("python assets/fraud_detection.py $sender_number $sender_aadhaar");
