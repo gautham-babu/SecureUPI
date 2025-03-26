@@ -97,7 +97,8 @@ if ($con->connect_error) {
     <img src="images/image1.jpg" alt="Top Right Image" class="top-right-image">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="images/logo.png" alt="Federal Bank">
@@ -124,6 +125,8 @@ if ($con->connect_error) {
             <span class="navbar-text ms-3">
                 Account Balance: ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?>
             </span>
+            <!-- Logout Button -->
+            <a href="logout.php" class="btn btn-outline-danger ms-3">Logout</a>
         </div>
     </div>
 </nav>
@@ -132,10 +135,9 @@ if ($con->connect_error) {
 <div class="container hero-section">
     <div class="row align-items-center">
         <div class="col-md-6 text-start "> <!-- Left-aligned content -->
-            <h1>Safe transactions with         Secure UPI</h1>
+            <h1>Safe transactions with Secure UPI</h1>
             <p>Uses Advanced Machine Learning Models to prevent fraud</p>
         </div>
-        
     </div>
 </div>
 
@@ -186,8 +188,6 @@ if ($con->connect_error) {
     </div>
 </div>
     <br><br><br><br>
-
-    </div>
 
     <!-- Include Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

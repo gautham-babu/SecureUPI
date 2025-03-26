@@ -9,6 +9,25 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
   <?php require 'assets/autoloader.php'; ?>
   <?php require 'assets/db.php'; ?>
   <?php require 'assets/function.php'; ?>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    body {
+        background: url('images/background.jpg') no-repeat center center fixed; /* Replace with your image path */
+        background-size: cover; /* Ensures the image covers the entire background */
+        font-family: 'Arial', sans-serif;
+        color: #333;
+    }
+    .navbar {
+        background-color: rgba(255, 255, 255, 0.4); /* Increased transparency */
+        backdrop-filter: blur(5px); /* Light blur effect */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+    }
+    .navbar-brand img {
+        height: 40px;
+    }
+  
+  
+    </style>
 </head>
 <body style="background:#ffffff;background-size: 100%">
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #244f9e;">
