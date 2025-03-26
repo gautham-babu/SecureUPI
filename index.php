@@ -19,67 +19,67 @@ if ($con->connect_error) {
     <!-- Include Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Gradient background */
-            font-family: 'Arial', sans-serif;
-            color: #333;
-        }
-        .navbar {
-            background-color: transparent;
-            box-shadow: none;
-        }
-        .navbar-brand img {
-            height: 40px;
-        }
-        .hero-section {
-            text-align: center;
-            padding: 100px 20px;
-            color: #333;
-        }
-        .hero-section h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-        .hero-section p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            background: #fff;
-        }
-        .card img {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            height: 150px;
-            object-fit: cover;
-        }
-        .btn {
-            border-radius: 20px;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-        }
-        .stats-section {
-            margin-top: 50px;
-            text-align: center;
-        }
-        .stats-section .stat-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .stats-section .stat-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .stats-section .stat-card p {
-            font-size: 1rem;
-            color: #666;
-        }
-    </style>
+    body {
+        background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Gradient background */
+        font-family: 'Arial', sans-serif;
+        color: #333;
+    }
+    .navbar {
+        background-color: transparent;
+        box-shadow: none;
+    }
+    .navbar-brand img {
+        height: 40px;
+    }
+    .hero-section {
+        text-align: center;
+        padding: 60px 20px; /* Further reduced padding to move stats section up */
+        color: #333;
+    }
+    .hero-section h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    .hero-section p {
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: #fff;
+    }
+    .card img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 150px;
+        object-fit: cover;
+    }
+    .btn {
+        border-radius: 20px;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+    .stats-section {
+        margin-top: 10px; /* Further reduced margin to move stats section up */
+        text-align: center;
+    }
+    .stats-section .stat-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .stats-section .stat-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    .stats-section .stat-card p {
+        font-size: 1rem;
+        color: #666;
+    }
+</style>
 </head>
 <body>
     <!-- Navbar -->
@@ -112,8 +112,8 @@ if ($con->connect_error) {
 
     <!-- Hero Section -->
     <div class="hero-section">
-        <h1>Grow your savings with Federal Bank</h1>
-        <p>Manage your finances with ease and security. Explore our services today.</p>
+        <h1>Safe transactions with Secure UPI</h1>
+        <p>Uses Advanced Machine Learning Models to prevent fraud</p>
     </div>
 
     <!-- Stats Section -->
@@ -127,8 +127,8 @@ if ($con->connect_error) {
             </div>
             <div class="col-md-6">
                 <div class="stat-card">
-                    <h3>Recent Transactions</h3>
-                    <p>View your latest transactions in the account statement section.</p>
+                    <h3>Transfer Money</h3>
+                    <a href="transfer.php" class="btn btn-primary">Transfer Now</a>
                 </div>
             </div>
         </div>
@@ -161,7 +161,10 @@ if ($con->connect_error) {
                     </div>
                 </div>
             </div>
+  
         </div>
+    <br><br><br>
+
     </div>
 
     <!-- Include Bootstrap 5 JS -->
