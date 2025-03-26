@@ -16,7 +16,6 @@ if ($con->connect_error) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure UPI</title>
-    <!-- Include Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     body {
@@ -35,7 +34,7 @@ if ($con->connect_error) {
     }
     .hero-section {
         text-align: center;
-        padding: 100px 100px;
+        padding: 120px 120px;
         color: #333;
     }
     .hero-section h1 {
@@ -87,7 +86,7 @@ if ($con->connect_error) {
         position: absolute;
         top: 100px; /* Adjust the distance from the top */
         right: 100px; /* Adjust the distance from the right */
-        width: 550px; /* Adjust the size of the image */
+        width: 500px; /* Adjust the size of the image */
         height: auto;
         z-index: 10; /* Ensure it stays above other elements */
     }
@@ -132,8 +131,8 @@ if ($con->connect_error) {
 <!-- Hero Section -->
 <div class="container hero-section">
     <div class="row align-items-center">
-        <div class="col-md-6 text-start"> <!-- Left-aligned content -->
-            <h1>Safe transactions with Secure UPI</h1>
+        <div class="col-md-6 text-start "> <!-- Left-aligned content -->
+            <h1>Safe transactions with         Secure UPI</h1>
             <p>Uses Advanced Machine Learning Models to prevent fraud</p>
         </div>
         
@@ -141,11 +140,11 @@ if ($con->connect_error) {
 </div>
 
 <!-- Stats Section -->
-<div class="container stats-section mt-5">
+<div class="container stats-section mt-3"> <!-- Reduced top margin -->
     <div class="row">
-        <div class="col-md-6"> <!-- Left-aligned Account Balance -->
-            <div class="card border-0 shadow-sm text-start p-2">
-                <div class="card-body">
+        <div class="col-md-4"> <!-- Reduced column width to make the box smaller -->
+            <div class="card border-0 shadow text-start p-0.5"> <!-- Adjusted padding -->
+                <div class="card-body text-center p-4">
                     <h5 class="card-title fw-bold">Account Balance</h5>
                     <p class="card-text text-muted" style="font-size: 1.2rem;">Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p>
                 </div>
@@ -155,10 +154,10 @@ if ($con->connect_error) {
 </div>
 
 <!-- Cards Section -->
-<div class="container mt-5">
+<div class="container mt-4"> <!-- Reduced top margin -->
     <div class="row g-4">
         <div class="col-md-4">
-            <div class="card border-0 shadow-sm text-center p-4">
+            <div class="card border-0 shadow text-center p-4">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Transfer Money</h5>
                     <p class="card-text text-muted">Send money securely to other accounts.</p>
@@ -167,7 +166,7 @@ if ($con->connect_error) {
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card border-0 shadow-sm text-center p-4">
+            <div class="card border-0 shadow text-center p-4">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Notices</h5>
                     <p class="card-text text-muted">Check the latest notices and updates.</p>
@@ -176,7 +175,7 @@ if ($con->connect_error) {
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card border-0 shadow-sm text-center p-4">
+            <div class="card border-0 shadow text-center p-4">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Contact Us</h5>
                     <p class="card-text text-muted">Get in touch with our support team.</p>
