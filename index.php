@@ -15,12 +15,13 @@ if ($con->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Federal Bank</title>
+    <title>Secure UPI</title>
     <!-- Include Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     body {
-        background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Gradient background */
+        background: url('images/background.jpg') no-repeat center center fixed; /* Replace with your image path */
+        background-size: cover; /* Ensures the image covers the entire background */
         font-family: 'Arial', sans-serif;
         color: #333;
     }
@@ -34,7 +35,7 @@ if ($con->connect_error) {
     }
     .hero-section {
         text-align: center;
-        padding: 60px 20px;
+        padding: 100px 100px;
         color: #333;
     }
     .hero-section h1 {
@@ -80,9 +81,22 @@ if ($con->connect_error) {
         font-size: 1rem;
         color: #666;
     }
-</style>
+
+    /* Top-right image styling */
+    .top-right-image {
+        position: absolute;
+        top: 100px; /* Adjust the distance from the top */
+        right: 100px; /* Adjust the distance from the right */
+        width: 550px; /* Adjust the size of the image */
+        height: auto;
+        z-index: 10; /* Ensure it stays above other elements */
+    }
+    </style>
 </head>
 <body>
+    <!-- Top-right image -->
+    <img src="images/image1.jpg" alt="Top Right Image" class="top-right-image">
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
@@ -115,20 +129,25 @@ if ($con->connect_error) {
     </div>
 </nav>
 
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <h1>Safe transactions with Secure UPI</h1>
-        <p>Uses Advanced Machine Learning Models to prevent fraud</p>
+<!-- Hero Section -->
+<div class="container hero-section">
+    <div class="row align-items-center">
+        <div class="col-md-6 text-start"> <!-- Left-aligned content -->
+            <h1>Safe transactions with Secure UPI</h1>
+            <p>Uses Advanced Machine Learning Models to prevent fraud</p>
+        </div>
+        
     </div>
+</div>
 
-   <!-- Stats Section -->
-   <div class="container stats-section">
-    <div class="row justify-content-center">
-        <div class="col-md-4"> <!-- Reduced column width -->
-            <div class="card border-0 shadow-sm text-center p-2"> <!-- Reduced padding -->
+<!-- Stats Section -->
+<div class="container stats-section mt-5">
+    <div class="row">
+        <div class="col-md-6"> <!-- Left-aligned Account Balance -->
+            <div class="card border-0 shadow-sm text-start p-2">
                 <div class="card-body">
-                    <h5 class="card-title fw-bold">Account Balance</h5> <!-- Reduced heading size -->
-                    <p class="card-text text-muted" style="font-size: 1.2rem;">Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p> <!-- Smaller font size -->
+                    <h5 class="card-title fw-bold">Account Balance</h5>
+                    <p class="card-text text-muted" style="font-size: 1.2rem;">Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p>
                 </div>
             </div>
         </div>
