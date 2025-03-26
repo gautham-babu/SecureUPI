@@ -25,15 +25,16 @@ if ($con->connect_error) {
         color: #333;
     }
     .navbar {
-        background-color: transparent;
-        box-shadow: none;
+        background-color: rgba(255, 255, 255, 0.4); /* Increased transparency */
+        backdrop-filter: blur(5px); /* Light blur effect */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
     }
     .navbar-brand img {
         height: 40px;
     }
     .hero-section {
         text-align: center;
-        padding: 60px 20px; /* Further reduced padding to move stats section up */
+        padding: 60px 20px;
         color: #333;
     }
     .hero-section h1 {
@@ -62,7 +63,7 @@ if ($con->connect_error) {
         padding: 0.5rem 1rem;
     }
     .stats-section {
-        margin-top: 10px; /* Further reduced margin to move stats section up */
+        margin-top: 10px;
         text-align: center;
     }
     .stats-section .stat-card {
@@ -84,31 +85,35 @@ if ($con->connect_error) {
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="images/logo.png" alt="Federal Bank">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="accounts.php">View Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="statements.php">Account Statement</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="transfer.php">Transfer</a>
-                    </li>
-                </ul>
-            </div>
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="images/logo.png" alt="Federal Bank">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accounts.php">View Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="statements.php">Account Statement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="transfer.php">Transfer</a>
+                </li>
+            </ul>
+            <!-- Account Balance -->
+            <span class="navbar-text ms-3">
+                Account Balance: ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?>
+            </span>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Hero Section -->
     <div class="hero-section">
@@ -116,54 +121,53 @@ if ($con->connect_error) {
         <p>Uses Advanced Machine Learning Models to prevent fraud</p>
     </div>
 
-    <!-- Stats Section -->
-    <div class="container stats-section">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="stat-card">
-                    <h3>Account Balance</h3>
-                    <p>Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="stat-card">
-                    <h3>Transfer Money</h3>
-                    <a href="transfer.php" class="btn btn-primary">Transfer Now</a>
+   <!-- Stats Section -->
+   <div class="container stats-section">
+    <div class="row justify-content-center">
+        <div class="col-md-4"> <!-- Reduced column width -->
+            <div class="card border-0 shadow-sm text-center p-2"> <!-- Reduced padding -->
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Account Balance</h5> <!-- Reduced heading size -->
+                    <p class="card-text text-muted" style="font-size: 1.2rem;">Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p> <!-- Smaller font size -->
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Cards Section -->
-    <div class="container mt-5">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/acount.jpg" class="card-img-top" alt="Account Summary">
-                    <div class="card-body">
-                        <a href="accounts.php" class="btn btn-outline-success w-100">Account Summary</a>
-                    </div>
+<!-- Cards Section -->
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-center p-4">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Transfer Money</h5>
+                    <p class="card-text text-muted">Send money securely to other accounts.</p>
+                    <a href="transfer.php" class="btn btn-outline-primary rounded-pill px-4">Transfer Now</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/transfermoney.jpg" class="card-img-top" alt="Transfer Money">
-                    <div class="card-body">
-                        <a href="transfer.php" class="btn btn-outline-success w-100">Transfer Money</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/contact.png" class="card-img-top" alt="Contact Us">
-                    <div class="card-body">
-                        <a href="feedback.php" class="btn btn-outline-primary w-100">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-  
         </div>
-    <br><br><br>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-center p-4">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Notices</h5>
+                    <p class="card-text text-muted">Check the latest notices and updates.</p>
+                    <a href="notice.php" class="btn btn-outline-warning rounded-pill px-4">View Notices</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm text-center p-4">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Contact Us</h5>
+                    <p class="card-text text-muted">Get in touch with our support team.</p>
+                    <a href="feedback.php" class="btn btn-outline-primary rounded-pill px-4">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <br><br><br><br>
 
     </div>
 
