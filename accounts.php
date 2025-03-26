@@ -30,28 +30,41 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     </style>
 </head>
 <body style="background:#ffffff;background-size: 100%">
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #244f9e;">
- <a class="navbar-brand" href="#">
- <img src="images/federal.png" width="130" height="30" class="d-inline-block align-top" alt="">
-  </a>
 
- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
- </button>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="images/logo.png" alt="Federal Bank">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accounts.php">View Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="statements.php">Account Statement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="transfer.php">Transfer</a>
+                </li>
+            </ul>
+            <!-- Account Balance -->
+            <span class="navbar-text ms-3">
+                Account Balance: ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?>
+            </span>
+            <!-- Logout Button -->
+            <a href="logout.php" class="btn btn-outline-danger ms-3">Logout</a>
+        </div>
+    </div>
+</nav>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link " href="index.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active ">  <a class="nav-link" href="accounts.php">View Profile</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="statements.php">Account Statement</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="transfer.php">Transfer</a></li>
-    </ul>
-    <?php include 'sideButton.php'; ?>
-   
-  </div>
-</nav><br><br><br>
+<br><br><br>
 <div class="container">
   <div class="card  w-75 mx-auto">
   <div class="card-header text-center">
