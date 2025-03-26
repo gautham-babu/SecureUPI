@@ -1,120 +1,170 @@
 <?php
 session_start();
-if(!isset($_SESSION['userId'])){ header('location:login.php');}
+if (!isset($_SESSION['userId'])) {
+    header('location:login.php');
+}
+
+// Database connection
+$con = new mysqli('localhost', 'root', '1997', 'mybank');
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
+}
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Banking</title>
-  <?php require 'assets/autoloader.php'; ?>
-  <?php require 'assets/db.php'; ?>
-  <?php require 'assets/function.php'; ?>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federal Bank</title>
+    <!-- Include Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0c3fc, #8ec5fc); /* Gradient background */
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        .navbar {
+            background-color: transparent;
+            box-shadow: none;
+        }
+        .navbar-brand img {
+            height: 40px;
+        }
+        .hero-section {
+            text-align: center;
+            padding: 100px 20px;
+            color: #333;
+        }
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+        .card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .btn {
+            border-radius: 20px;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+        .stats-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .stats-section .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stats-section .stat-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .stats-section .stat-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+    </style>
 </head>
-<body style="background:#ffffff;background-size: 100%">
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #244f9e;">
- <a class="navbar-brand" href="#">
-    <img src="images/federal.png" width="130" height="30" class="d-inline-block align-top" alt="">
-   
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item ">  <a class="nav-link" href="accounts.php">View Profile</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="statements.php">Account Statement</a></li>
-      <li class="nav-item ">  <a class="nav-link" href="transfer.php">Transfer</a></li>
-    </ul>
-    <?php include 'sideButton.php'; ?>
-    
-  </div>
-</nav><br><br><br>
-<div class="row w-100" >
-  <div class="col" style="padding: 22px;padding-top: 0">
-    <div class="jumbotron shadowBlack" style="padding: 25px;min-height: 241px;max-height: 241px;background-color: white;">
-  <h5 class="display-5">Welcome to Federal Bank</h5>
-  <p  class="lead alert alert-warning"><b>Latest Notification:</b>
-
-  <?php 
-      $array = $con->query("select * from notice where userId = '$_SESSION[userId]' order by date desc");
-      if ($array->num_rows > 0)
-      {
-        $row = $array->fetch_assoc();
-        // {
-          echo $row['notice'];
-        // }
-      }
-      else
-        echo "<div class='alert alert-info'>Notice box empty</div>";
-     ?></p>
-  
-</div>
-        <div id="carouselExampleIndicators" class="carousel slide my-2 rounded-1 shadowBlack" data-ride="carousel" >
-          <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100" src="images/f1.png" alt="First slide" style="max-height: 350px">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="images/f2.png" alt="Second slide" style="max-height: 350px">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="images/f3.png" alt="Third slide" style="max-height: 350px">
-          </div>
-
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="images/logo.png" alt="Federal Bank">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="accounts.php">View Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="statements.php">Account Statement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="transfer.php">Transfer</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-  </div>
-<div class="col">
-    <div class="row" style="padding: 22px;padding-top: 0">
-      <div class="col">
-        <div class="card shadowBlack ">
-          <img class="card-img-top" src="images/acount.jpg" style="max-height: 160px;min-height: 155px" alt="Card image cap">
-          <div class="card-body">
-            <a href="accounts.php" class="btn btn-outline-success btn-block">Account Summary</a>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card shadowBlack ">
-          <img class="card-img-top" src="images/transfermoney.jpg" alt="Card image cap" style="max-height: 175px;min-height: 155px">
-        <div class="card-body">
-          <a href="transfer.php" class="btn btn-outline-success btn-block">Transfer Money</a>
-         </div>
-        </div>
-      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Grow your savings with Federal Bank</h1>
+        <p>Manage your finances with ease and security. Explore our services today.</p>
     </div>
-    <div class="row" style="padding: 22px">
-      <div class="col">
-        <div class="card shadowBlack ">
-          <img class="card-img-top" src="images/notification.gif" style="max-height: 175px;min-height: 105px" alt="Card image cap">
-          <div class="card-body">
-            <a href="notice.php" class="btn btn-outline-primary btn-block">Check Notification</a>
-          </div>
+
+    <!-- Stats Section -->
+    <div class="container stats-section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h3>Account Balance</h3>
+                    <p>Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h3>Recent Transactions</h3>
+                    <p>View your latest transactions in the account statement section.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card shadowBlack ">
-          <img class="card-img-top" src="images/contact.png" alt="Card image cap" style="max-height: 175px;min-height: 155px">
-        <div class="card-body">
-          <a href="feedback.php" class="btn btn-outline-primary btn-block">Contact Us</a>
-         </div>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
+
+    <!-- Cards Section -->
+    <div class="container mt-5">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="images/acount.jpg" class="card-img-top" alt="Account Summary">
+                    <div class="card-body">
+                        <a href="accounts.php" class="btn btn-outline-success w-100">Account Summary</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="images/transfermoney.jpg" class="card-img-top" alt="Transfer Money">
+                    <div class="card-body">
+                        <a href="transfer.php" class="btn btn-outline-success w-100">Transfer Money</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="images/contact.png" class="card-img-top" alt="Contact Us">
+                    <div class="card-body">
+                        <a href="feedback.php" class="btn btn-outline-primary w-100">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
