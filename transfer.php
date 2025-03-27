@@ -135,6 +135,12 @@ $con->query($updateDailyTransactionQuery);
             $updateFailedTransactionQuery = "UPDATE useraccounts SET Failed_Transaction_Count = Failed_Transaction_Count + 1 WHERE id = '$userId'";
             $con->query($updateFailedTransactionQuery);
         
+ // Insert a new row into the transaction table for "wrong pin"
+ $amount = $_POST['amount'];
+ $insertWrongPinTransactionQuery = "INSERT INTO transaction (userId, action, date, debit, credit, other) 
+ VALUES ('$userId', 'wrong pin', NOW(), '$amount', NULL, '$otherNo')";
+$con->query($insertWrongPinTransactionQuery);
+
             // Show an alert and redirect back to the transfer page
             echo "<script>
                 alert('Invalid UPI PIN. Please try again.');
@@ -210,7 +216,7 @@ $con->query($updateDailyTransactionQuery);
                         </thead>
                         <tbody>";
                 while ($row = $result->fetch_assoc()) {
-                    $amount = $row['action'] == 'debit' || $row['action'] == 'withdraw' || $row['action'] == 'fraud' ? $row['debit'] : $row['credit'];
+                    $amount = $row['action'] == 'debit' || $row['action'] == 'withdraw' || $row['action'] == 'fraud' || $row['action'] == 'wrong pin' ? $row['debit'] : $row['credit'];
                     $amount = isset($amount) ? $amount : 'N/A';
                     $otherNo = isset($row['other']) ? $row['other'] : 'N/A';
 

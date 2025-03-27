@@ -114,12 +114,17 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
             }
             if ($row['action'] == 'debit') 
             {
-              echo "<div class='alert alert-warning'>Debited  ₹$row[debit] from your account at $row[date] to  account no.$row[other]</div>";
+              echo "<div class='alert alert-secondary'>Debited  ₹$row[debit] from your account at $row[date] to  account no.$row[other]</div>";
             }
             if ($row['action'] == 'fraud') 
             {
               echo "<div class='alert alert-danger'>Failed to sent ₹$row[debit] from your account at $row[date] to suspected Fraud account no.$row[other]</div>";
             }
+            if ($row['action'] == 'wrong pin') 
+            {
+              echo "<div class='alert alert-warning'>Wrong UPI Pin entered at $row[date]</div>";
+            }
+
 
          }
       } 
