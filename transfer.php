@@ -141,6 +141,30 @@ $con->query($updateDailyTransactionQuery);
  VALUES ('$userId', 'wrong pin', NOW(), '$amount', NULL, '$otherNo')";
 $con->query($insertWrongPinTransactionQuery);
 
+ // Fetch the last 5 transactions with action as "wrong pin"
+ $fetchWrongPinTransactionsQuery = "SELECT date FROM transaction WHERE userId = '$userId' AND action = 'wrong pin' ORDER BY date DESC LIMIT 5";
+ $result = $con->query($fetchWrongPinTransactionsQuery);
+
+
+
+ if ($result->num_rows >= 5) { // Ensure there are at least 5 transactions to calculate the time difference
+     $dates = [];
+     while ($row = $result->fetch_assoc()) {
+         $dates[] = strtotime($row['date']); // Convert dates to timestamps
+     }
+
+     // Calculate the time difference between the earliest and the latest transactions
+     $timeDifference = max($dates) - min($dates); // Difference in seconds
+
+     if ($timeDifference < 3600) { // Check if the time difference is less than 1 hour (3600 seconds)
+         // Update Previous_Fraudulent_Activity in the useraccounts table
+         $updateFraudulentActivityQuery = "UPDATE useraccounts SET Previous_Fraudulent_Activity = '1' WHERE id = '$userId'";
+         $con->query($updateFraudulentActivityQuery);
+     }
+ }
+
+
+
             // Show an alert and redirect back to the transfer page
             echo "<script>
                 alert('Invalid UPI PIN. Please try again.');
