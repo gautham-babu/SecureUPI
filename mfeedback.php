@@ -20,7 +20,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
 <body style="background:#ffffff;background-size: 100%">
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #244f9e;">
  <a class="navbar-brand" href="#">
- <img src="images/federal.png" width="130" height="30" class="d-inline-block align-top" alt="">
+ <img src="images/logo.png" width="130" height="30" class="d-inline-block align-top" alt="">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -82,8 +82,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
   </tbody>
 </table>
   <div class="card-footer text-muted">
-    <?php echo bankName; ?>
-  </div>
+<p>Secure UPI</p>  </div>
 </div>
 </body>
 </html>

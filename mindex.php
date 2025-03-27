@@ -124,8 +124,8 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
   </tbody>
 </table>
   <div class="card-footer text-muted">
-    <?php echo bankName; ?>
-  </div>
+<p>Secure UPI</p>
+</div>
 </div>
 </body>
 
