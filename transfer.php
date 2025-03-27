@@ -40,11 +40,9 @@ if ($result->num_rows > 0) {
     .navbar-brand img {
         height: 40px;
     }
-  
-  
     </style>
 </head>
-<body style="background:#ffffff;background-size: 100%">
+<body>
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="#">
@@ -88,31 +86,31 @@ if ($result->num_rows > 0) {
             <form method="POST">
                 <div class="alert alert-success w-50 mx-auto">
                     <h5>New Transfer</h5>
-                    <input type="text" name="otherNo" class="form-control" placeholder="Enter Receiver Account number"
-                           required>
-                    <button type="submit" name="get" class="btn btn-primary btn-bloc btn-sm my-1">Get Account Info
-                    </button>
+                    <input type="text" name="otherNo" class="form-control" placeholder="Enter Receiver Account number" required>
+                    <button type="submit" name="get" class="btn btn-primary btn-bloc btn-sm my-1">Get Account Info</button>
                 </div>
             </form>
             <?php if (isset($_POST['get'])) {
-                $array3 = $con->query("select * from userAccounts where accountNo = '$_POST[otherNo]'");
+                $array3 = $con->query("SELECT * FROM useraccounts WHERE accountNo = '$_POST[otherNo]'");
                 if ($array3->num_rows > 0) {
                     $row2 = $array3->fetch_assoc();
                     echo "<div class='alert alert-success w-50 mx-auto'>
                           <form method='POST'>
                             Account No.
-                            <input type='text' value='$row2[accountNo]' name='otherNo' class='form-control ' readonly required>
+                            <input type='text' value='$row2[accountNo]' name='otherNo' class='form-control' readonly required>
                             Account Holder Name.
                             <input type='text' class='form-control' value='$row2[name]' readonly required>
                             Account Holder Bank Name.
                             <input type='text' class='form-control' value='" . bankName . "' readonly required>
-                            Enter Amount for transfer.
+                            Enter Amount for Transfer.
                             <input type='number' name='amount' class='form-control' min='1' max='$userData[balance]' required>
+                            Enter UPI PIN.
+                            <input type='password' name='upiPin' class='form-control' required>
                             <button type='submit' name='transferSelf' class='btn btn-primary btn-bloc btn-sm my-1'>Transfer</button>
                           </form>
                         </div>";
                 } else {
-                    echo "<div class='alert alert-danger w-50 mx-auto'>Account No. $_POST[otherNo] Does not exist</div>";
+                    echo "<div class='alert alert-danger w-50 mx-auto'>Account No. $_POST[otherNo] does not exist</div>";
                 }
             } ?>
             <br>
@@ -120,7 +118,27 @@ if ($result->num_rows > 0) {
             <?php
 if (isset($_POST['transferSelf'])) {
     $otherNo = $_POST['otherNo'];
-    
+    $upiPin = $_POST['upiPin']; // Get the entered UPI PIN
+
+    // Validate the UPI PIN
+    $upiQuery = "SELECT upi_pin FROM useraccounts WHERE id = '$userId'";
+    $upiResult = $con->query($upiQuery);
+    if ($upiResult->num_rows > 0) {
+        $storedUpiPin = $upiResult->fetch_assoc()['upi_pin'];
+
+        if ($upiPin !== $storedUpiPin) {
+            echo "<script>
+                alert('Invalid UPI PIN. Please try again.');
+                window.location.href = 'transfer.php';
+            </script>";
+            exit; // Stop further execution
+        }
+    } else {
+        echo "<div class='alert alert-danger'>Unable to validate UPI PIN. Please try again later.</div>";
+        return;
+    }
+
+    // Proceed with fraud detection and transfer
     $query = "SELECT * FROM useraccounts WHERE accountNo = '$otherNo'";
     $result = $con->query($query);
     if ($result->num_rows > 0) {
@@ -137,27 +155,17 @@ if (isset($_POST['transferSelf'])) {
     $command = escapeshellcmd("python assets/fraud_detection.py $sender_number $sender_aadhaar");
     $output = shell_exec($command);
 
-    // Debugging: Log the command and output
-    error_log("Command executed: $command");
-    error_log("Output from Python script: $output");
-
     // Check if the transaction is fraudulent
     if ($output === null || trim($output) === '') {
         echo "<div class='alert alert-warning'>Unable to determine if the transaction is fraudulent. Please try again later.</div>";
     } else {
         $is_fraud = trim($output) == '1';
 
-        // Debugging: Log the fraud detection result
-        error_log("Fraud detection result: $is_fraud");
-
         if ($is_fraud) {
-            // If the transaction is fraudulent, display a warning and do not proceed
             $amount = $_POST['amount'];
-            makeTransaction('fraud', $amount, $otherNo);
+            makeTransaction('fraud', $amount, $otherNo); // Only one transaction for fraud
             echo "<div class='alert alert-danger'>Transfer Failed: The Receiver account is flagged as fraudulent!</div>";
         } else {
-            // If the transaction is not fraudulent, proceed with the transfer
-            echo "<div class='alert alert-success'>Transaction is not fraudulent. Proceeding with transfer...</div>";
             $amount = $_POST['amount'];
             setBalance($amount, 'debit', $userData['accountNo']);
             setBalance($amount, 'credit', $otherNo);
@@ -193,10 +201,9 @@ if (isset($_POST['transferSelf'])) {
                         </thead>
                         <tbody>";
                 while ($row = $result->fetch_assoc()) {
-                    // Determine the amount based on the action (credit or debit)
                     $amount = $row['action'] == 'debit' || $row['action'] == 'withdraw' || $row['action'] == 'fraud' ? $row['debit'] : $row['credit'];
-                    $amount = isset($amount) ? $amount : 'N/A'; // Handle NULL values
-                    $otherNo = isset($row['other']) ? $row['other'] : 'N/A'; // Handle NULL values
+                    $amount = isset($amount) ? $amount : 'N/A';
+                    $otherNo = isset($row['other']) ? $row['other'] : 'N/A';
 
                     echo "<tr>
                             <td>{$row['date']}</td>
