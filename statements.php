@@ -114,7 +114,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
             }
             if ($row['action'] == 'debit') 
             {
-              echo "<div class='alert alert-warning'>Debitted  ₹$row[debit] from your account at $row[date] to  account no.$row[other]</div>";
+              echo "<div class='alert alert-warning'>Debited  ₹$row[debit] from your account at $row[date] to  account no.$row[other]</div>";
             }
             if ($row['action'] == 'fraud') 
             {

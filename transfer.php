@@ -118,57 +118,64 @@ if ($result->num_rows > 0) {
             <br>
             <h5>Transfer History</h5>
             <?php
-            if (isset($_POST['transferSelf'])) {
-                $otherNo = $_POST['otherNo'];
-                
-                $query = "SELECT * FROM useraccounts WHERE accountNo = '$otherNo'";
-                $result = $con->query($query);
-                if ($result->num_rows > 0) {
-                    $OtherData = $result->fetch_assoc();
-                } else {
-                    die("User data not found.");
-                }
+if (isset($_POST['transferSelf'])) {
+    $otherNo = $_POST['otherNo'];
+    
+    $query = "SELECT * FROM useraccounts WHERE accountNo = '$otherNo'";
+    $result = $con->query($query);
+    if ($result->num_rows > 0) {
+        $OtherData = $result->fetch_assoc();
+    } else {
+        die("User data not found.");
+    }
 
-                // Fetch sender's aadhaar and number
-                $sender_aadhaar = $OtherData['aadhaar'];
-                $sender_number = $OtherData['number'];
+    // Fetch sender's aadhaar and number
+    $sender_aadhaar = $OtherData['aadhaar'];
+    $sender_number = $OtherData['number'];
 
-                // Call the Python script for fraud detection
-                $command = escapeshellcmd("python assets/fraud_detection.py $sender_number $sender_aadhaar");
-                $output = shell_exec($command);
+    // Call the Python script for fraud detection
+    $command = escapeshellcmd("python assets/fraud_detection.py $sender_number $sender_aadhaar");
+    $output = shell_exec($command);
 
-                // Debugging: Log the command and output
-                error_log("Command executed: $command");
-                error_log("Output from Python script: $output");
+    // Debugging: Log the command and output
+    error_log("Command executed: $command");
+    error_log("Output from Python script: $output");
 
-                // Check if the transaction is fraudulent
-                if ($output === null || trim($output) === '') {
-                    echo "<div class='alert alert-warning'>Unable to determine if the transaction is fraudulent. Please try again later.</div>";
-                } else {
-                    $is_fraud = trim($output) == '1';
+    // Check if the transaction is fraudulent
+    if ($output === null || trim($output) === '') {
+        echo "<div class='alert alert-warning'>Unable to determine if the transaction is fraudulent. Please try again later.</div>";
+    } else {
+        $is_fraud = trim($output) == '1';
 
-                    // Debugging: Log the fraud detection result
-                    error_log("Fraud detection result: $is_fraud");
+        // Debugging: Log the fraud detection result
+        error_log("Fraud detection result: $is_fraud");
 
-                    if ($is_fraud) {
-                        // If the transaction is fraudulent, display a warning and do not proceed
-                        $amount = $_POST['amount'];
-                        makeTransaction('fraud', $amount, $otherNo);
-                        echo "<div class='alert alert-danger'>Transfer Failed: The Receiver account is flagged as fraudulent!</div>";
-                        
+        if ($is_fraud) {
+            // If the transaction is fraudulent, display a warning and do not proceed
+            $amount = $_POST['amount'];
+            makeTransaction('fraud', $amount, $otherNo);
+            echo "<div class='alert alert-danger'>Transfer Failed: The Receiver account is flagged as fraudulent!</div>";
+        } else {
+            // If the transaction is not fraudulent, proceed with the transfer
+            echo "<div class='alert alert-success'>Transaction is not fraudulent. Proceeding with transfer...</div>";
+            $amount = $_POST['amount'];
+            setBalance($amount, 'debit', $userData['accountNo']);
+            setBalance($amount, 'credit', $otherNo);
+            makeTransaction('transfer', $amount, $otherNo);
+            makeTransaction('receive', $amount, $otherNo);
 
-                      } else {
-                        // If the transaction is not fraudulent, proceed with the transfer
-                        echo "<div class='alert alert-success'>Transaction is not fraudulent. Proceeding with transfer...</div>";
-                        $amount = $_POST['amount'];
-                        setBalance($amount, 'debit', $userData['accountNo']);
-                        setBalance($amount, 'credit', $otherNo);
-                        makeTransaction('transfer', $amount, $otherNo);
-                        makeTransaction('receive', $amount, $otherNo);
-                        echo "<script>alert('Transfer Successful');window.location.href='transfer.php'</script>";
-                    }
-                }
+            // Update the session balance
+            $updatedBalanceQuery = "SELECT balance FROM useraccounts WHERE id = '$userId'";
+            $updatedBalanceResult = $con->query($updatedBalanceQuery);
+            if ($updatedBalanceResult->num_rows > 0) {
+                $updatedBalance = $updatedBalanceResult->fetch_assoc()['balance'];
+                $_SESSION['user']['balance'] = $updatedBalance; // Update session balance
             }
+
+            echo "<script>alert('Transfer Successful');window.location.href='transfer.php'</script>";
+        }
+    }
+}
 
             // Fetch and display transaction history
             $query = "SELECT * FROM transaction WHERE userId = '$userId' ORDER BY date DESC";
