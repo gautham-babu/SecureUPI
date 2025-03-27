@@ -72,7 +72,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
                     <a class="nav-link" href="accounts.php">View Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="statements.php">Account Statement</a>
+                    <a class="nav-link active" href="statements.php">Transaction History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="transfer.php">Transfer</a>
@@ -87,10 +87,10 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
         </div>
     </div>
 </nav>
-<br>
+
 <div class="container mt-5">
     <div class="card w-75 mx-auto border-0 shadow-lg rounded-4"> <!-- Subtle shadow and smooth rounded corners -->
-        <div class="card-header text-center fw-bold bg-secondary  bg-gradient text-white rounded-top">
+        <div class="card-header text-center fw-bold bg-primary  bg-gradient text-white rounded-top">
     Transactions made with your account
   </div>
   <div class="card-body">

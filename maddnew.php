@@ -43,7 +43,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
 <?php
 if (isset($_POST['saveAccount']))
 {
-  if (!$con->query("insert into useraccounts (name,aadhaar,accountNo,upi_pin,address,email,password,balance,number,branch) values ('$_POST[name]','$_POST[aadhaar]','$_POST[accountNo]','$_POST[upi_pin]','$_POST[address]','$_POST[email]','$_POST[password]','$_POST[balance]','$_POST[number]','$_POST[branch]')")) {
+  if (!$con->query("insert into useraccounts (name,aadhaar,accountNo,upi_pin,address,email,password,balance,number,branch,Previous_Fraudulent_Activity,Daily_Transaction_Count,Failed_Transaction_Count) values ('$_POST[name]','$_POST[aadhaar]','$_POST[accountNo]','$_POST[upi_pin]','$_POST[address]','$_POST[email]','$_POST[password]','$_POST[balance]','$_POST[number]','$_POST[branch]','0','0','0')")) {
     echo "<div claass='alert alert-success'>Failed. Error is:".$con->error."</div>";
   }
   else
