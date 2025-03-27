@@ -163,7 +163,7 @@ if ($con->connect_error) {
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Transfer Money</h5>
                     <p class="card-text text-muted">Send money securely to other accounts.</p>
-                    <a href="transfer.php" class="btn btn-outline-primary rounded-pill px-4">Transfer Now</a>
+                    <a href="transfer.php" class="btn btn-outline-success rounded-pill px-4">Transfer Now</a>
                 </div>
             </div>
         </div>
