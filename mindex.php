@@ -16,9 +16,44 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
       header("location:mindex.php");
     }
   } ?>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+body {
+    background: url('images/background.jpg') no-repeat center center fixed; /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire background */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.navbar {
+    background-color: rgba(255, 255, 255, 0.4); /* Increased transparency */
+    backdrop-filter: blur(100px); /* Light blur effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Change to your desired hover color */
+}
+
+.navbar-text {
+    font-weight: bold;
+    color: #333;
+}
+</style>
 </head>
 <body style="background:#ffffff;background-size: 100%">
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #244f9e;">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" >
+<div class="container">
  <a class="navbar-brand" href="#">
  <img src="images/logo.png" width="130" height="30" class="d-inline-block align-top" alt="">
   </a>
@@ -31,7 +66,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
       <li class="nav-item ">
         <a class="nav-link active" href="mindex.php">Customers<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item ">  <a class="nav-link" href="maccounts.php">Staff</a></li>
+      
       <li class="nav-item ">  <a class="nav-link" href="maddnew.php">Add New Account</a></li>
       <li class="nav-item ">  <a class="nav-link" href="mfeedback.php">Feedback</a></li>
 
@@ -39,7 +74,8 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
     <?php include 'msideButton.php'; ?>
     
   </div>
-</nav><br>
+  </div>
+</nav><br><br>
 <div class="container">
 <div class="card w-100 text-center shadowBlue">
   <div class="card-header">

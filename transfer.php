@@ -60,7 +60,7 @@ if ($result->num_rows > 0) {
                     <a class="nav-link" href="accounts.php">View Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="statements.php">Account Statement</a>
+                    <a class="nav-link" href="statements.php">Transaction History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="transfer.php">Transfer</a>
@@ -114,7 +114,7 @@ if ($result->num_rows > 0) {
                 }
             } ?>
             <br>
-            <h5>Transfer History</h5>
+            <h5 class="text-center">Transfer History</h5>
             <?php
 if (isset($_POST['transferSelf'])) {
     $otherNo = $_POST['otherNo'];

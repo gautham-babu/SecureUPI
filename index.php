@@ -115,7 +115,7 @@ if ($con->connect_error) {
                     <a class="nav-link" href="accounts.php">View Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="statements.php">Account Statement</a>
+                    <a class="nav-link" href="statements.php">Transaction History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="transfer.php">Transfer</a>
@@ -147,6 +147,7 @@ if ($con->connect_error) {
         <div class="col-md-4"> <!-- Reduced column width to make the box smaller -->
             <div class="card border-0 shadow text-start p-0.5"> <!-- Adjusted padding -->
                 <div class="card-body text-center p-4">
+                
                     <h5 class="card-title fw-bold">Account Balance</h5>
                     <p class="card-text text-muted" style="font-size: 1.2rem;">Your current balance is ₹<?php echo isset($_SESSION['user']['balance']) ? $_SESSION['user']['balance'] : '0'; ?></p>
                 </div>

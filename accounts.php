@@ -48,7 +48,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
                     <a class="nav-link active" href="accounts.php">View Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="statements.php">Account Statement</a>
+                    <a class="nav-link" href="statements.php">Transaction History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="transfer.php">Transfer</a>

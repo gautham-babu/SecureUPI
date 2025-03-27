@@ -1,6 +1,6 @@
 <?php 
     $con = new mysqli('localhost','root','1997','mybank');
-    define('bankName', 'Federal Bank');
+    define('bankName', 'Secure UPI');
     $ar = $con->query("select * from useraccounts,branch where id = '$_SESSION[userId]' AND userAccounts.branch = branch.branchId");
     $userData = $ar->fetch_assoc();
 ?>
