@@ -3,7 +3,8 @@ import joblib
 import pandas as pd
 
 # Load the pre-trained model
-model = joblib.load('simplegauthu2_model.pkl')
+model_path = r"e:/XAMPP/htdocs/bank/assets/simplegauthu2_model.pkl"
+model = joblib.load(model_path)
 
 # Define the columns expected by the model
 columns = ['Transaction_Amount', 'Account_Balance', 'Previous_Fraudulent_Activity', 'Daily_Transaction_Count', "Failed_Transaction_Count"]

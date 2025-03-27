@@ -120,6 +120,12 @@ if (isset($_POST['transferSelf'])) {
     $otherNo = $_POST['otherNo'];
     $upiPin = $_POST['upiPin']; // Get the entered UPI PIN
 
+// Check if the sender's account number is the same as the receiver's account number
+if ($userData['accountNo'] === $otherNo) {
+    echo "<div class='alert alert-danger'>You cannot transfer money to your own account.</div>";
+    return;
+}
+
 // Increment the Daily_Transaction_Count in the database
 $updateDailyTransactionQuery = "UPDATE useraccounts SET Daily_Transaction_Count = Daily_Transaction_Count + 1 WHERE id = '$userId'";
 $con->query($updateDailyTransactionQuery);
@@ -187,15 +193,27 @@ $con->query($insertWrongPinTransactionQuery);
     }
 
     // Fetch sender's aadhaar and number
-    $sender_aadhaar = $OtherData['aadhaar'];
-    $sender_number = $OtherData['number'];
+    $amount = $_POST['amount'];
+    $sender_balance = $OtherData['balance'];
+    $sender_pfa = $OtherData['Previous_Fraudulent_Activity'];
+    $sender_dtc = $OtherData['Daily_Transaction_Count'];
+    $sender_ftc = $OtherData['Failed_Transaction_Count'];
+   
 
     // Call the Python script for fraud detection
-    $command = escapeshellcmd("python assets/fraud_detection.py $sender_number $sender_aadhaar");
-    $output = shell_exec($command);
+   
+$command = escapeshellcmd("python e:/XAMPP/htdocs/bank/assets/fraud_detection1.py $amount $sender_balance $sender_pfa $sender_dtc $sender_ftc");
+
+
+
+    $output = shell_exec($command . " 2>&1"); // Capture both output and errors
+
+    error_log("Command: $command");
+    error_log("Output: $output");
 
     // Check if the transaction is fraudulent
     if ($output === null || trim($output) === '') {
+        error_log("Fraud detection script failed. Command: $command, Output: $output");
         echo "<div class='alert alert-warning'>Unable to determine if the transaction is fraudulent. Please try again later.</div>";
     } else {
         $is_fraud = trim($output) == '1';
