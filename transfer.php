@@ -127,6 +127,11 @@ if (isset($_POST['transferSelf'])) {
         $storedUpiPin = $upiResult->fetch_assoc()['upi_pin'];
 
         if ($upiPin !== $storedUpiPin) {
+            // Increment the Failed_Transaction_Count in the database
+            $updateFailedTransactionQuery = "UPDATE useraccounts SET Failed_Transaction_Count = Failed_Transaction_Count + 1 WHERE id = '$userId'";
+            $con->query($updateFailedTransactionQuery);
+        
+            // Show an alert and redirect back to the transfer page
             echo "<script>
                 alert('Invalid UPI PIN. Please try again.');
                 window.location.href = 'transfer.php';
