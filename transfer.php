@@ -120,6 +120,10 @@ if (isset($_POST['transferSelf'])) {
     $otherNo = $_POST['otherNo'];
     $upiPin = $_POST['upiPin']; // Get the entered UPI PIN
 
+// Increment the Daily_Transaction_Count in the database
+$updateDailyTransactionQuery = "UPDATE useraccounts SET Daily_Transaction_Count = Daily_Transaction_Count + 1 WHERE id = '$userId'";
+$con->query($updateDailyTransactionQuery);
+
     // Validate the UPI PIN
     $upiQuery = "SELECT upi_pin FROM useraccounts WHERE id = '$userId'";
     $upiResult = $con->query($upiQuery);
