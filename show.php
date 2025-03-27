@@ -55,7 +55,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
         <tr>
           <td>Name</td>
           <th><?php echo $row['name'] ?></th>
-          <td>Account No</td>
+          <td>UPI Id</td>
           <th><?php echo $row['accountNo'] ?></th>
         </tr><tr>
           <td>Branch Name</td>
@@ -65,22 +65,19 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
         </tr><tr>
           <td>Current Balance</td>
           <th>₹<?php echo $row['balance'] ?></th>
-          <td>Account Type</td>
-          <th><?php echo $row['accountType'] ?></th>
+          <td>Address</td>
+          <th><?php echo $row['address'] ?></th>
         </tr><tr>
           <td>Aadhaar</td>
           <th><?php echo $row['aadhaar'] ?></th>
           <td>Contact Number</td>
           <th><?php echo $row['number'] ?></th>
-        </tr><tr>
-          <td>Address</td>
-          <th><?php echo $row['address'] ?></th>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="card-footer text-muted">
-    <?php echo bankName; ?>
+   <p>Secure UPI</p>
   </div>
 </div>
 

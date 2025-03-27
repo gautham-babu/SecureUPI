@@ -51,11 +51,11 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
     <tr>
       <th scope="col">No.</th>
       <th scope="col">Holder Name</th>
-      <th scope="col">Account No.</th>
+      <th scope="col">UPI Id</th>
       <th scope="col">Branch Name</th>
       <th scope="col">Current Balance</th>
-      <th scope="col">Account type</th>
-      <th scope="col">Contact</th>
+     
+      <th scope="col">Ph No</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -74,7 +74,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
         <td><?php echo $row['accountNo'] ?></td>
         <td><?php echo $row['branchName'] ?></td>
         <td>₹<?php echo $row['balance'] ?></td>
-        <td><?php echo $row['accountType'] ?></td>
+       
         <td><?php echo $row['number'] ?></td>
         <td>
           <a href="show.php?id=<?php echo $row['id'] ?>" class='btn btn-success btn-sm' data-toggle='tooltip' title="View More info">View</a>

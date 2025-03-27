@@ -80,25 +80,27 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row" class="text-center text-muted">Account No.</th> <!-- Center-aligned field names -->
+                        <th scope="row" class="text-center text-muted">Name</th>
+                        <td class="text-center"><?php echo $userData['name']; ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center text-muted">UPI Id</th> <!-- Center-aligned field names -->
                         <td class="text-center"><?php echo $userData['accountNo']; ?></td> <!-- Center-aligned details -->
                     </tr>
+                    
                     <tr>
-                        <th scope="row" class="text-center text-muted">Branch</th>
-                        <td class="text-center"><?php echo $userData['branchName']; ?></td>
+                        <th scope="row" class="text-center text-muted">Email</th>
+                        <td class="text-center"><?php echo $userData['email']; ?></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="text-center text-muted">Branch Code</th>
-                        <td class="text-center"><?php echo $userData['branchNo']; ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center text-muted">Account Type</th>
-                        <td class="text-center"><?php echo $userData['accountType']; ?></td>
+                        <th scope="row" class="text-center text-muted">Ph No</th>
+                        <td class="text-center"><?php echo $userData['number']; ?></td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-center text-muted">Account Created</th>
                         <td class="text-center"><?php echo $userData['date']; ?></td>
                     </tr>
+                    
                 </tbody>
             </table>
         </div>

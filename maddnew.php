@@ -43,7 +43,7 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
 <?php
 if (isset($_POST['saveAccount']))
 {
-  if (!$con->query("insert into useraccounts (name,aadhaar,accountNo,accountType,address,email,password,balance,number,branch) values ('$_POST[name]','$_POST[aadhaar]','$_POST[accountNo]','$_POST[accountType]','$_POST[address]','$_POST[email]','$_POST[password]','$_POST[balance]','$_POST[number]','$_POST[branch]')")) {
+  if (!$con->query("insert into useraccounts (name,aadhaar,accountNo,upi_pin,address,email,password,balance,number,branch) values ('$_POST[name]','$_POST[aadhaar]','$_POST[accountNo]','$_POST[upi_pin]','$_POST[address]','$_POST[email]','$_POST[password]','$_POST[balance]','$_POST[number]','$_POST[branch]')")) {
     echo "<div claass='alert alert-success'>Failed. Error is:".$con->error."</div>";
   }
   else
@@ -73,15 +73,10 @@ if (isset($_GET['del']) && !empty($_GET['del']))
           <td><input type="number" name="aadhaar" class="form-control input-sm" required></td>
         </tr>
         <tr>
-          <th>Account Number</th>
+          <th>UPI Id</th>
           <td><input type="" name="accountNo" readonly value="<?php echo time() ?>" class="form-control input-sm" required></td>
-          <th>Account Type</th>
-          <td>
-            <select class="form-control input-sm" name="accountType" required>
-              <option value="current" selected>Current</option>
-              <option value="savings" selected>Savings</option>
-            </select>
-          </td>
+          <th>UPI Pin</th>
+          <td><input type="number" name="upi_pin" class="form-control input-sm" required></td>
         </tr>
         <tr>
           
