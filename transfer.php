@@ -21,7 +21,7 @@ if ($result->num_rows > 0) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Banking</title>
+<title>UPI</title>
     <?php require 'assets/autoloader.php'; ?>
     <?php require 'assets/function.php'; ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,13 +80,13 @@ if ($result->num_rows > 0) {
 <div class="container">
     <div class="card w-75 mx-auto">
         <div class="card-header text-center">
-            Funds Transfer
+            Send Money
         </div>
         <div class="card-body">
             <form method="POST">
                 <div class="alert alert-success w-50 mx-auto">
                     <h5>New Transfer</h5>
-                    <input type="text" name="otherNo" class="form-control" placeholder="Enter Receiver Account number" required>
+                    <input type="text" name="otherNo" class="form-control" placeholder="Enter Receiver UPI Id" required>
                     <button type="submit" name="get" class="btn btn-primary btn-bloc btn-sm my-1">Get Account Info</button>
                 </div>
             </form>
@@ -96,12 +96,11 @@ if ($result->num_rows > 0) {
                     $row2 = $array3->fetch_assoc();
                     echo "<div class='alert alert-success w-50 mx-auto'>
                           <form method='POST'>
-                            Account No.
+                            UPI Id.
                             <input type='text' value='$row2[accountNo]' name='otherNo' class='form-control' readonly required>
                             Account Holder Name.
                             <input type='text' class='form-control' value='$row2[name]' readonly required>
-                            Account Holder Bank Name.
-                            <input type='text' class='form-control' value='" . bankName . "' readonly required>
+                           
                             Enter Amount for Transfer.
                             <input type='number' name='amount' class='form-control' min='1' max='$userData[balance]' required>
                             Enter UPI PIN.

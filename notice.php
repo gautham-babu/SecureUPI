@@ -5,7 +5,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Banking</title>
+  <title>UPI</title>
   <?php require 'assets/autoloader.php'; ?>
   <?php require 'assets/db.php'; ?>
   <?php require 'assets/function.php'; ?>
@@ -66,7 +66,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
 <div class="container">
   <div class="card  w-75 mx-auto">
   <div class="card-header text-center">
-    Notifications from Bank
+    Notifications from Admin
   </div>
   <div class="card-body">
     <?php 
