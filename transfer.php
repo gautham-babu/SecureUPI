@@ -56,7 +56,7 @@ if ($result->num_rows > 0) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="accounts.php">View Profile</a>
@@ -65,7 +65,7 @@ if ($result->num_rows > 0) {
                     <a class="nav-link" href="statements.php">Account Statement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="transfer.php">Transfer</a>
+                    <a class="nav-link active" href="transfer.php">Transfer</a>
                 </li>
             </ul>
             <!-- Account Balance -->
@@ -205,7 +205,7 @@ if ($result->num_rows > 0) {
             ?>
         </div>
         <div class="card-footer text-muted">
-            <?php echo bankName ?>
+            <p>Secure UPI</p>
         </div>
     </div>
 </div>

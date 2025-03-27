@@ -66,13 +66,13 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="accounts.php">View Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="statements.php">Account Statement</a>
+                    <a class="nav-link active" href="statements.php">Account Statement</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="transfer.php">Transfer</a>
@@ -87,10 +87,10 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
         </div>
     </div>
 </nav>
-<br><br><br>
-<div class="container">
-  <div class="card  w-75 mx-auto">
-  <div class="card-header text-center">
+<br>
+<div class="container mt-5">
+    <div class="card w-75 mx-auto border-0 shadow-lg rounded-4"> <!-- Subtle shadow and smooth rounded corners -->
+        <div class="card-header text-center fw-bold bg-secondary  bg-gradient text-white rounded-top">
     Transactions made with your account
   </div>
   <div class="card-body">
@@ -126,7 +126,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     ?>  
   </div>
   <div class="card-footer text-muted">
-   <?php echo bankName ?>
+   <p>Secure UPI</p>
   </div>
 </div>
 

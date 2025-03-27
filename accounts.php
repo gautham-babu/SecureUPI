@@ -5,7 +5,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Banking</title>
+  <title>UPI</title>
   <?php require 'assets/autoloader.php'; ?>
   <?php require 'assets/db.php'; ?>
   <?php require 'assets/function.php'; ?>
@@ -34,7 +34,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="images/logo.png" alt="Federal Bank">
+            <img src="images/logo.png" alt="Secure UPI">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -42,10 +42,10 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="accounts.php">View Profile</a>
+                    <a class="nav-link active" href="accounts.php">View Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="statements.php">Account Statement</a>
@@ -64,46 +64,48 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     </div>
 </nav>
 
-<br><br><br>
-<div class="container">
-  <div class="card  w-75 mx-auto">
-  <div class="card-header text-center">
-    Your Account Information
-  </div>
-  <div class="card-body">
-    <table class="table table-striped table-dark w-75 mx-auto">
-  <thead>
-    <tr>
-      <td scope="col">Account No.</td>
-      <th scope="col"><?php echo $userData['accountNo']; ?></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Branch</th>
-      <td><?php echo $userData['branchName']; ?></td>
-    </tr>
-    <tr>
-      <th scope="row">Branch Code</th>
-      <td><?php echo $userData['branchNo']; ?></td>
-    </tr>
-    <tr>
-      <th scope="row">Account Type</th>
-      <td><?php echo $userData['accountType']; ?></td>
-    </tr>
-    <tr>
-      <th scope="row">Account Created</th>
-      <td><?php echo $userData['date']; ?></td>
-    </tr>
-  </tbody>
-</table>
-      
-  </div>
-  <div class="card-footer text-muted">
-   <?php echo bankName ?>
-  </div>
-</div>
-
+<br>
+<div class="container mt-5">
+    <div class="card w-75 mx-auto border-0 shadow-lg rounded-4"> <!-- Subtle shadow and smooth rounded corners -->
+        <div class="card-header text-center fw-bold bg-success bg-gradient text-white rounded-top"> <!-- Light green header -->
+            Your Account Information
+        </div>
+        <div class="card-body p-4"> <!-- Added padding for better spacing -->
+            <table class="table table-hover table-striped table-bordered text-center align-middle rounded-3 overflow-hidden"> <!-- Added rounded corners and overflow-hidden -->
+                <thead class="bg-light text-success"> <!-- Light background with green text -->
+                    <tr>
+                        <th scope="col" class="fw-bold text-center">Field</th> <!-- Center-aligned header -->
+                        <th scope="col" class="fw-bold text-center">Details</th> <!-- Center-aligned header -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-center text-muted">Account No.</th> <!-- Center-aligned field names -->
+                        <td class="text-center"><?php echo $userData['accountNo']; ?></td> <!-- Center-aligned details -->
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center text-muted">Branch</th>
+                        <td class="text-center"><?php echo $userData['branchName']; ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center text-muted">Branch Code</th>
+                        <td class="text-center"><?php echo $userData['branchNo']; ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center text-muted">Account Type</th>
+                        <td class="text-center"><?php echo $userData['accountType']; ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center text-muted">Account Created</th>
+                        <td class="text-center"><?php echo $userData['date']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-center text-muted bg-light rounded-bottom"> <!-- Light footer background with rounded bottom -->
+        <p>Secure UPI</p>
+      </div>
+    </div>
 </div>
 </body>
 </html>
