@@ -6,7 +6,7 @@
 	<?php require 'assets/function.php'; ?>
 	<?php
     $con = new mysqli('localhost','root','1997','mybank');
-    define('bankName', 'Federal Bank');
+    define('bankName', 'Secure UPI');
 	
 		$error = "";
 		if (isset($_POST['userLogin']))
