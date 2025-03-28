@@ -62,7 +62,7 @@ if (!isset($_SESSION['managerId'])) { header('location:login.php'); }
         </div>
     </div>
 </nav>
-<br><br><br>
+<br><br>
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sendOTP'])) {
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verifyOTP'])) {
         }
         unset($_SESSION['generatedOTP'], $_SESSION['otpData']); // Clear OTP session data
     } else {
-        echo "<div class='alert alert-danger'>Invalid OTP. Please try again.</div>";
+        echo "<div class='alert alert-danger text-center'>Invalid OTP. Please try again.</div>";
     }
 }
 ?>
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verifyOTP'])) {
                 <form method="POST">
                     <div class="form-group">
                         <label for="otp">Enter OTP</label>
-                        <input type="number" name="otp" class="form-control input-sm" required>
+                        <input type="number" name="otp" class="form-control input-sm otp-input mx-auto" required placeholder="Enter 6-digit OTP" autocomplete="off" style="width: 500px; text-align: center;">
                     </div>
                     <button type="submit" name="verifyOTP" class="btn btn-success btn-sm">Verify OTP</button>
                 </form>
