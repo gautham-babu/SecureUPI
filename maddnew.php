@@ -41,6 +41,20 @@ if (!isset($_SESSION['managerId'])) { header('location:login.php'); }
             emailjs.init("uHasjq7B0siEy0lAu"); // Replace with your Email.js public key
         })();
     </script>
+    <script>
+    function validateForm() {
+        const aadhaar = document.getElementById('aadhaar').value;
+        const contactNumber = document.getElementById('contactNumber').value;
+        const submitButton = document.getElementById('submitButton');
+
+        // Check if Aadhaar is exactly 12 digits and contact number is exactly 10 digits
+        if (/^\d{12}$/.test(aadhaar) && /^\d{10}$/.test(contactNumber)) {
+            submitButton.disabled = false; // Enable the button
+        } else {
+            submitButton.disabled = true; // Disable the button
+        }
+    }
+</script>
 </head>
 <body style="background:#ffffff;background-size: 100%">
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -115,7 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verifyOTP'])) {
                         <th>Name</th>
                         <td><input type="text" name="name" class="form-control input-sm" required></td>
                         <th>Aadhaar</th>
-                        <td><input type="number" name="aadhaar" class="form-control input-sm" required></td>
+                        <td>
+                        <input type="text" id="aadhaar" name="aadhaar" class="form-control input-sm" required 
+               pattern="\d{12}" maxlength="12" title="Invalid Aadhaar number(Must be 12 digits)" 
+               oninput="validateForm()">
+               </td>
                     </tr>
                     <tr>
                         <th>UPI Id</th>
@@ -127,7 +145,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verifyOTP'])) {
                         <th>Address</th>
                         <td><input type="text" name="address" class="form-control input-sm" required></td>
                         <th>Contact Number</th>
-                        <td><input type="number" name="number" class="form-control input-sm" required></td>
+                        <td>
+        <input type="text" id="contactNumber" name="number" class="form-control input-sm" required 
+               pattern="\d{10}" maxlength="10" title="Contact number must be exactly 10 digits" 
+               oninput="validateForm()">
+    </td>
                     </tr>
                     <tr>
                         <th>Email</th>
