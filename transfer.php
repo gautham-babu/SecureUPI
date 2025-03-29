@@ -130,6 +130,31 @@ $updateDailyTransactionQuery = "UPDATE useraccounts SET Daily_Transaction_Count 
 $con->query($updateDailyTransactionQuery);
 
 
+
+// Fetch the account creation date of the receiver
+$query = "SELECT date FROM useraccounts WHERE accountNo = '$otherNo'";
+$result = $con->query($query);
+
+if ($result->num_rows > 0) {
+    $receiverData = $result->fetch_assoc();
+    $accountCreationDate = $receiverData['date']; // Timestamp from the database
+
+    // Calculate the account age in days
+    $currentDate = new DateTime(); // Current date
+    $creationDate = new DateTime($accountCreationDate); // Account creation date
+    $interval = $currentDate->diff($creationDate); // Difference between dates
+    $accountAgeInDays = $interval->days; // Get the difference in days
+
+    // Ensure the account age fits within VARCHAR(10)
+    $accountAgeInDays = min($accountAgeInDays, 9999999999); // Truncate if it exceeds 10 characters
+
+    // Update the Acc_Age column in the useraccounts table
+    $updateAccAgeQuery = "UPDATE useraccounts SET Acc_Age = '$accountAgeInDays' WHERE accountNo = '$otherNo'";
+    $con->query($updateAccAgeQuery);
+}
+
+
+
 // Calculate the average transaction amount
 $avgQuery = "SELECT AVG(amount) AS avgAmount FROM (
     SELECT debit AS amount FROM transaction WHERE userId = '$userId' AND debit IS NOT NULL
@@ -225,9 +250,10 @@ $con->query($insertWrongPinTransactionQuery);
     $sender_pfa = $OtherData['Previous_Fraudulent_Activity'];
     $sender_dtc = $OtherData['Daily_Transaction_Count'];
     $sender_ftc = $OtherData['Failed_Transaction_Count'];
-    $sender_avg = $OtherData['Risk_Score'];
+    $sender_avg = $OtherData['Avg_Transaction_Amount'];
     $sender_acc_age = $OtherData['Acc_Age'];
     $sender_rs = $OtherData['Risk_Score'];
+  
 
     // Call the Python script for fraud detection
    
