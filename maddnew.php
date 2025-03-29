@@ -105,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verifyOTP'])) {
     if ($enteredOTP == $_SESSION['generatedOTP']) {
         // OTP verified, create the account
         $data = $_SESSION['otpData']; // Retrieve the saved form data
-        if ($con->query("INSERT INTO useraccounts (name, aadhaar, accountNo, upi_pin, address, email, password, balance, number, branch, Previous_Fraudulent_Activity, Daily_Transaction_Count, Failed_Transaction_Count) VALUES 
-            ('{$data['name']}', '{$data['aadhaar']}', '{$data['accountNo']}', '{$data['upi_pin']}', '{$data['address']}', '{$data['email']}', '{$data['password']}', '{$data['balance']}', '{$data['number']}', '{$data['branch']}', '0', '0', '0')")) {
+        if ($con->query("INSERT INTO useraccounts (name, aadhaar, accountNo, upi_pin, address, email, password, balance, number, branch, Previous_Fraudulent_Activity, Daily_Transaction_Count, Failed_Transaction_Count,Avg_Transaction_Amount,Acc_Age,Risk_Score) VALUES 
+            ('{$data['name']}', '{$data['aadhaar']}', '{$data['accountNo']}', '{$data['upi_pin']}', '{$data['address']}', '{$data['email']}', '{$data['password']}', '{$data['balance']}', '{$data['number']}', '{$data['branch']}', '0', '0', '0','0','180','0.5')")) {
             echo "<div class='alert alert-info text-center'>Account added Successfully</div>";
         } else {
             echo "<div class='alert alert-danger'>Error: " . $con->error . "</div>";

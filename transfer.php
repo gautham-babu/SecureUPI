@@ -197,11 +197,13 @@ $con->query($insertWrongPinTransactionQuery);
     $sender_pfa = $OtherData['Previous_Fraudulent_Activity'];
     $sender_dtc = $OtherData['Daily_Transaction_Count'];
     $sender_ftc = $OtherData['Failed_Transaction_Count'];
-   
+    $sender_avg = $OtherData['Risk_Score'];
+    $sender_acc_age = $OtherData['Acc_Age'];
+    $sender_rs = $OtherData['Risk_Score'];
 
     // Call the Python script for fraud detection
    
-$command = escapeshellcmd("python e:/XAMPP/htdocs/bank/assets/fraud_detection1.py $amount $sender_balance $sender_pfa $sender_dtc $sender_ftc");
+$command = escapeshellcmd("python e:/XAMPP/htdocs/bank/assets/fraud_detection2.py $amount $sender_balance $sender_pfa $sender_dtc $sender_avg $sender_ftc $sender_acc_age $sender_rs");
 
 
 
