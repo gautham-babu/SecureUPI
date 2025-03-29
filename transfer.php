@@ -129,6 +129,34 @@ if ($userData['accountNo'] === $otherNo) {
 $updateDailyTransactionQuery = "UPDATE useraccounts SET Daily_Transaction_Count = Daily_Transaction_Count + 1 WHERE id = '$userId'";
 $con->query($updateDailyTransactionQuery);
 
+
+// Calculate the average transaction amount
+$avgQuery = "SELECT AVG(amount) AS avgAmount FROM (
+    SELECT debit AS amount FROM transaction WHERE userId = '$userId' AND debit IS NOT NULL
+    UNION ALL
+    SELECT credit AS amount FROM transaction WHERE userId = '$userId' AND credit IS NOT NULL
+) AS combined";
+$avgResult = $con->query($avgQuery);
+
+if ($avgResult->num_rows > 0) {
+    $avgAmount = $avgResult->fetch_assoc()['avgAmount'];
+
+    // Format the average amount to fit within VARCHAR(10)
+    $avgAmount = number_format($avgAmount, 2); // Round to 2 decimal places
+
+    // Ensure the formatted value does not exceed 10 characters
+    if (strlen($avgAmount) > 10) {
+        $avgAmount = substr($avgAmount, 0, 10); // Truncate to 10 characters
+    }
+
+    // Update Avg_Transaction_Amount in useraccounts table
+    $updateAvgQuery = "UPDATE useraccounts SET Avg_Transaction_Amount = '$avgAmount' WHERE id = '$userId'";
+    $con->query($updateAvgQuery);
+}
+
+
+
+
     // Validate the UPI PIN
     $upiQuery = "SELECT upi_pin FROM useraccounts WHERE id = '$userId'";
     $upiResult = $con->query($upiQuery);
