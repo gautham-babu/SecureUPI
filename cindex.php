@@ -5,7 +5,7 @@ if(!isset($_SESSION['cashId'])){ header('location:login.php');}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Banking</title>
+<title>UPI</title>
   <?php require 'assets/autoloader.php'; ?>
   <?php require 'assets/db.php'; ?>
   <?php require 'assets/function.php'; ?>
